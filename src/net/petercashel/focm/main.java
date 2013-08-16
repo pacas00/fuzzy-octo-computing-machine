@@ -1,5 +1,6 @@
 package net.petercashel.focm;
 
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -64,13 +65,46 @@ public class main {
 	private static void Generate() {
 
 		String ASCIIName = toASCII(uname);
-		int intASCIIName = Integer.parseInt(ASCIIName);
+		BigInteger BigIntASCIIName = new BigInteger(ASCIIName.trim());
 		
 		if (debug) {
 			System.out.println(ASCIIName);
 		}
 
-
+		//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		//Date date = new Date();
+		//System.out.println(dateFormat.format(date));
+		
+		DateFormat dateFormat = new SimpleDateFormat("HHmmssa");
+		Date date = new Date();
+		
+		if (debug) {
+			System.out.println(dateFormat.format(date));
+		}
+		
+		String ASCIITime = toASCII(dateFormat.format(date));
+		BigInteger BigIntASCIITime = new BigInteger(ASCIITime);
+		
+		if (debug) {
+			System.out.println(ASCIITime);
+		}
+		
+		dateFormat = new SimpleDateFormat("EEEEddMMMyyyy");
+		date = new Date();
+		
+		if (debug) {
+			System.out.println(dateFormat.format(date));
+		}
+		
+		String ASCIIDate = toASCII(dateFormat.format(date));
+		ASCIIDate = toASCII(ASCIIDate.trim());
+		BigInteger BigIntASCIIDate = new BigInteger(ASCIIDate);
+		
+		if (debug) {
+			System.out.println(ASCIIDate);
+		}
+		
+		
 		
 		
 		
