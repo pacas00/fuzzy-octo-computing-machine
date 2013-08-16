@@ -1,0 +1,23 @@
+<project name="BootstrapLauncher" default="dist">
+	<property name="MyApp" value="fuzzy-octo-computing-machine" />
+	<!-- Create binary distribution -->
+	<target name="clean">
+	<delete dir="bin"/>
+	<mkdir dir="bin"/>
+	</target>
+	<target name="compile" depends="clean">
+		<javac srcdir="src"
+			encoding="UTF-8"
+			destdir="bin">
+		</javac>
+	</target>
+	<target name="dist" depends="compile">
+		<delete file="${MyApp}.jar"/>
+		<jar jarfile="${MyApp}.jar"
+         basedir="bin"
+         manifest="manifest.mf" />
+	</target>
+
+<target name="main" depends="dist"/>
+
+</project>

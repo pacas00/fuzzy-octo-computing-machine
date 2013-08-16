@@ -1,0 +1,10 @@
+<project name="BootstrapLauncher" default="dist">
+	<property name="MyApp" value="fuzzy-octo-computing-machine" />
+	<!-- Create binary distribution -->
+	<target name="dist">
+		<delete file="${MyApp}.jar"/>
+		<jar jarfile="${MyApp}.jar"
+         basedir="bin"
+         manifest="manifest.mf" />
+	</target>
+</project>
