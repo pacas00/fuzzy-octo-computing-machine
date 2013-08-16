@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import org.apache.commons.cli.*;
 
@@ -71,10 +72,6 @@ public class main {
 			System.out.println(ASCIIName);
 		}
 
-		//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		//Date date = new Date();
-		//System.out.println(dateFormat.format(date));
-		
 		DateFormat dateFormat = new SimpleDateFormat("HHmmssa");
 		Date date = new Date();
 		
@@ -104,8 +101,61 @@ public class main {
 			System.out.println(ASCIIDate);
 		}
 		
+		BigInteger BigIntCode_1 = ((BigIntASCIIName.multiply(BigIntASCIITime)).multiply(BigIntASCIIDate));
 		
+		if (debug) {
+			System.out.println("BigIntCode_1");
+			System.out.println(BigIntCode_1);
+		}
+		BigInteger BigIntDivider = BigIntCode_1.divide(new BigInteger(String.valueOf(64)));
+		if (debug) {
+			System.out.println("BigIntDivider");
+			System.out.println(BigIntDivider);			
+		}
+		String BigIntDividedString = BigIntDivider.toString();
+		Random random = new Random(Long.parseLong(BigIntDividedString.substring(4, 20)));
+		BigInteger BigIntRandom_1 = new BigInteger(150, random);
+		if (debug) {
+			System.out.println("BigIntRandom_1");
+			System.out.println(BigIntRandom_1);
+		}
 		
+		BigInteger BigIntPreFinal = (BigIntCode_1.multiply(BigIntRandom_1)).divide(BigIntDivider);
+		BigInteger BigIntFinal = (BigIntPreFinal.multiply(BigIntRandom_1)).multiply(BigIntCode_1);
+		
+		if (debug) {
+			System.out.println("BigIntFinal");
+			System.out.println(BigIntFinal);
+		}
+
+		int BigIntFinalLength = BigIntFinal.toString().length();
+		
+		int whole = 0;
+		int remains = 0;
+		
+		whole = BigIntFinalLength / 4;
+		int part = ((BigIntFinalLength / 4) / 4) * 2;
+		String Hex = "";		
+		
+		if (debug) {
+			System.out.println("HexStart");
+			System.out.println(whole);
+			System.out.println(part);
+			System.out.println(remains);
+		}
+		for(int i = part; i < whole; i++)
+		{
+			String str = Integer.toHexString(Integer.parseInt(BigIntFinal.toString().substring(i * 4, (i * 4) + 4)));
+			Hex = Hex + str;
+//			if (debug) {
+//				System.out.println("HexRun");
+//				System.out.println(str);
+//				System.out.println(Hex);
+//			}
+		}
+		
+			System.out.println("Generated Code is");
+			System.out.println(Hex);
 		
 		
 	}
