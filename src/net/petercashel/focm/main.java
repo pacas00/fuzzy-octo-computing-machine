@@ -1,5 +1,9 @@
 package net.petercashel.focm;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.commons.cli.*;
 
 public class main {
@@ -59,21 +63,28 @@ public class main {
 
 	private static void Generate() {
 
-		String asciName = toAsci(uname);
+		String ASCIIName = toASCII(uname);
+		int intASCIIName = Integer.parseInt(ASCIIName);
 		
 		if (debug) {
-			System.out.println(asciName);
+			System.out.println(ASCIIName);
 		}
 
+
+		
 		
 		
 	}
 	
-	private static String toAsci(String input) {
+	private static String toASCII(String input) {
 		String output = "";
 		for(int i = 0; i < input.length(); i++)
 		{
+			try {
 			output = output + Character.getNumericValue(input.charAt(i));
+			} catch (NullPointerException e) {
+				//just incase it throws when the character is blank
+			}
 		}
 		return output;
 	}
