@@ -85,7 +85,7 @@ public class MainDialog extends JDialog {
 		SaveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				authCodeField.setText(Generate(authUserField.getText()));
+				authCodeField.setText(Generate(authUserField.getText().trim().replace(" ", "")));
 			}
 		});
 		fieldPanel.add(SaveButton);
