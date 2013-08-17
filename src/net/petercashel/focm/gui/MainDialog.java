@@ -85,7 +85,7 @@ public class MainDialog extends JDialog {
 		SaveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				authCodeField.setText(Generate(authUserField.getText().trim().replace(" ", "")));
+				authCodeField.setText(Generate(authUserField.getText()));
 			}
 		});
 		fieldPanel.add(SaveButton);
@@ -115,23 +115,23 @@ public class MainDialog extends JDialog {
 	
 	private static String Generate(String name) {
 
-		String ASCIIName = toASCII(name);
-		BigInteger BigIntASCIIName = new BigInteger(ASCIIName.trim());
+		String UNICODEName = toUNICODE(name);
+		BigInteger BigIntUNICODEName = new BigInteger(UNICODEName.trim());
 
 		DateFormat dateFormat = new SimpleDateFormat("HHmmssa");
 		Date date = new Date();
 
-		String ASCIITime = toASCII(dateFormat.format(date));
-		BigInteger BigIntASCIITime = new BigInteger(ASCIITime);
+		String UNICODETime = toUNICODE(dateFormat.format(date));
+		BigInteger BigIntUNICODETime = new BigInteger(UNICODETime);
 
 		dateFormat = new SimpleDateFormat("EEEEddMMMyyyy");
 		date = new Date();
 
-		String ASCIIDate = toASCII(dateFormat.format(date));
-		ASCIIDate = toASCII(ASCIIDate.trim());
-		BigInteger BigIntASCIIDate = new BigInteger(ASCIIDate);
+		String UNICODEDate = toUNICODE(dateFormat.format(date));
+		UNICODEDate = toUNICODE(UNICODEDate.trim());
+		BigInteger BigIntUNICODEDate = new BigInteger(UNICODEDate);
 
-		BigInteger BigIntCode_1 = ((BigIntASCIIName.multiply(BigIntASCIITime)).multiply(BigIntASCIIDate));
+		BigInteger BigIntCode_1 = ((BigIntUNICODEName.multiply(BigIntUNICODETime)).multiply(BigIntUNICODEDate));
 
 		BigInteger BigIntDivider = BigIntCode_1.divide(new BigInteger(String.valueOf(64)));
 
@@ -159,12 +159,14 @@ public class MainDialog extends JDialog {
 		return Hex;
 	}
 
-	private static String toASCII(String input) {
+	private static String toUNICODE(String input) {
 		String output = "";
 		for(int i = 0; i < input.length(); i++)
 		{
 			try {
-				output = output + Character.getNumericValue(input.charAt(i));
+				char ch = input.charAt(i);
+				int cp = String.valueOf(ch).codePointAt(0);
+				output = output + cp;
 			} catch (NullPointerException e) {
 				//just incase it throws when the character is blank
 			}

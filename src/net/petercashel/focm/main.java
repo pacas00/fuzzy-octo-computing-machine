@@ -95,11 +95,11 @@ public class main {
 
 	private static void Generate() {
 
-		String ASCIIName = toASCII(uname);
-		BigInteger BigIntASCIIName = new BigInteger(ASCIIName.trim());
+		String UNICODEName = toUNICODE(uname);
+		BigInteger BigIntUNICODEName = new BigInteger(UNICODEName.trim());
 
 		if (debug) {
-			System.out.println(ASCIIName);
+			System.out.println(UNICODEName);
 		}
 
 		DateFormat dateFormat = new SimpleDateFormat("HHmmssa");
@@ -109,11 +109,11 @@ public class main {
 			System.out.println(dateFormat.format(date));
 		}
 
-		String ASCIITime = toASCII(dateFormat.format(date));
-		BigInteger BigIntASCIITime = new BigInteger(ASCIITime);
+		String UNICODETime = toUNICODE(dateFormat.format(date));
+		BigInteger BigIntUNICODETime = new BigInteger(UNICODETime);
 
 		if (debug) {
-			System.out.println(ASCIITime);
+			System.out.println(UNICODETime);
 		}
 
 		dateFormat = new SimpleDateFormat("EEEEddMMMyyyy");
@@ -123,15 +123,15 @@ public class main {
 			System.out.println(dateFormat.format(date));
 		}
 
-		String ASCIIDate = toASCII(dateFormat.format(date));
-		ASCIIDate = toASCII(ASCIIDate.trim());
-		BigInteger BigIntASCIIDate = new BigInteger(ASCIIDate);
+		String UNICODEDate = toUNICODE(dateFormat.format(date));
+		UNICODEDate = toUNICODE(UNICODEDate.trim());
+		BigInteger BigIntUNICODEDate = new BigInteger(UNICODEDate);
 
 		if (debug) {
-			System.out.println(ASCIIDate);
+			System.out.println(UNICODEDate);
 		}
 
-		BigInteger BigIntCode_1 = ((BigIntASCIIName.multiply(BigIntASCIITime)).multiply(BigIntASCIIDate));
+		BigInteger BigIntCode_1 = ((BigIntUNICODEName.multiply(BigIntUNICODETime)).multiply(BigIntUNICODEDate));
 
 		if (debug) {
 			System.out.println("BigIntCode_1");
@@ -190,12 +190,14 @@ public class main {
 
 	}
 
-	private static String toASCII(String input) {
+	private static String toUNICODE(String input) {
 		String output = "";
 		for(int i = 0; i < input.length(); i++)
 		{
 			try {
-				output = output + Character.getNumericValue(input.charAt(i));
+				char ch = input.charAt(i);
+				int cp = String.valueOf(ch).codePointAt(0);
+				output = output + cp;
 			} catch (NullPointerException e) {
 				//just incase it throws when the character is blank
 			}
