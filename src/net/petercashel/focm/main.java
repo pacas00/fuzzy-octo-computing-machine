@@ -16,7 +16,7 @@ import org.apache.commons.cli.*;
 public class main {
 
 	private static String uname = "";
-	private static boolean debug = false;
+	public static boolean debug = false;
 	private static boolean nogui = false;
 	/**
 	 * @param args
@@ -71,7 +71,9 @@ public class main {
 		}
 
 		if (canRun ) {
-			Generate();
+			
+			System.out.println("Generated Code is");
+			System.out.println(MainDialog.Generate(uname));
 		}
 		if (!nogui) {
 			spawnGui();
@@ -91,118 +93,6 @@ public class main {
 		MainDialog gui = new MainDialog();
 		gui.run();
 
-	}
-
-	private static void Generate() {
-
-		String UNICODEName = toUNICODE(uname);
-		BigInteger BigIntUNICODEName = new BigInteger(UNICODEName.trim());
-
-		if (debug) {
-			System.out.println(UNICODEName);
-		}
-
-		DateFormat dateFormat = new SimpleDateFormat("HHmmssa");
-		Date date = new Date();
-
-		if (debug) {
-			System.out.println(dateFormat.format(date));
-		}
-
-		String UNICODETime = toUNICODE(dateFormat.format(date));
-		BigInteger BigIntUNICODETime = new BigInteger(UNICODETime);
-
-		if (debug) {
-			System.out.println(UNICODETime);
-		}
-
-		dateFormat = new SimpleDateFormat("EEEEddMMMyyyy");
-		date = new Date();
-
-		if (debug) {
-			System.out.println(dateFormat.format(date));
-		}
-
-		String UNICODEDate = toUNICODE(dateFormat.format(date));
-		UNICODEDate = toUNICODE(UNICODEDate.trim());
-		BigInteger BigIntUNICODEDate = new BigInteger(UNICODEDate);
-
-		if (debug) {
-			System.out.println(UNICODEDate);
-		}
-
-		BigInteger BigIntCode_1 = ((BigIntUNICODEName.multiply(BigIntUNICODETime)).multiply(BigIntUNICODEDate));
-
-		if (debug) {
-			System.out.println("BigIntCode_1");
-			System.out.println(BigIntCode_1);
-		}
-		BigInteger BigIntDivider = BigIntCode_1.divide(new BigInteger(String.valueOf(64)));
-		if (debug) {
-			System.out.println("BigIntDivider");
-			System.out.println(BigIntDivider);			
-		}
-		String BigIntDividedString = BigIntDivider.toString();
-		Random random = new Random(Long.parseLong(BigIntDividedString.substring(4, 20)));
-		BigInteger BigIntRandom_1 = new BigInteger(150, random);
-		if (debug) {
-			System.out.println("BigIntRandom_1");
-			System.out.println(BigIntRandom_1);
-		}
-
-		BigInteger BigIntPreFinal = (BigIntCode_1.multiply(BigIntRandom_1)).divide(BigIntDivider);
-		BigInteger BigIntFinal = (BigIntPreFinal.multiply(BigIntRandom_1)).multiply(BigIntCode_1);
-
-		if (debug) {
-			System.out.println("BigIntFinal");
-			System.out.println(BigIntFinal);
-		}
-
-		int BigIntFinalLength = BigIntFinal.toString().length();
-
-		int whole = 0;
-		int remains = 0;
-
-		whole = BigIntFinalLength / 4;
-		int part = ((BigIntFinalLength / 4) / 4) * 2;
-		String Hex = "";		
-
-		if (debug) {
-			System.out.println("HexStart");
-			System.out.println(whole);
-			System.out.println(part);
-			System.out.println(remains);
-		}
-		for(int i = part; i < whole; i++)
-		{
-			String str = Integer.toHexString(Integer.parseInt(BigIntFinal.toString().substring(i * 4, (i * 4) + 4)));
-			Hex = Hex + str;
-			//			if (debug) {
-			//				System.out.println("HexRun");
-			//				System.out.println(str);
-			//				System.out.println(Hex);
-			//			}
-		}
-
-		System.out.println("Generated Code is");
-		System.out.println(Hex);
-
-
-	}
-
-	private static String toUNICODE(String input) {
-		String output = "";
-		for(int i = 0; i < input.length(); i++)
-		{
-			try {
-				char ch = input.charAt(i);
-				int cp = String.valueOf(ch).codePointAt(0);
-				output = output + cp;
-			} catch (NullPointerException e) {
-				//just incase it throws when the character is blank
-			}
-		}
-		return output;
 	}
 
 }
